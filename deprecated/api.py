@@ -8,6 +8,8 @@ import datetime
 import tools
 from tools import DefaultList
 
+# THIS CODE IS DEPRECATED. TRIGGER USING MAIN.PY
+
 scope = 'playlist-read-private'
 # choose_playlist = "Love, Death and The Open Road"
 
