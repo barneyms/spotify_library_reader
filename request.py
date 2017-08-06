@@ -4,10 +4,12 @@ import pandas as pd
 import os
 import sys
 import datetime
+import numpy as np
 
 import tools
 import scopes
 import library
+
 
 
 class Request(object):
@@ -89,7 +91,7 @@ class Request(object):
         else:
             print('sorry, this request isn\'t configured yet')
 
-    def publish(self):
+    def publish(self, google_auth=None):
 
         file_path = os.path.join(os.getcwd(), 'tests')
         now = datetime.datetime.now().strftime('%y%m%d_%H%M%S')
@@ -105,6 +107,43 @@ class Request(object):
         file_name = uid + pid + now + '.csv'
         if self.results is not None:
             self.results.to_csv(os.path.join(file_path, file_name), index=False)
+
+            sh = google_auth.open('Spotify Metadata')
+            worksheet = sh.add_worksheet(title=self.playlist, rows="200", cols="30")
+            worksheet = sh.worksheet(self.playlist)
+
+            df = self.results
+
+            # columns names
+            columns = df.columns.values.tolist()
+            # selection of the range that will be updated
+            cell_list = worksheet.range('A1:' + tools.numberToLetters(len(columns)) + '1')
+            # modifying the values in the range
+            for cell in cell_list:
+                val = columns[cell.col - 1]
+                # if type(val) is str:
+                #     val = val.decode('utf-8')
+                cell.value = val
+            # update in batch
+            worksheet.update_cells(cell_list)
+
+            # number of lines and columns
+            num_lines, num_columns = df.shape
+            # selection of the range that will be updated
+            cell_list = worksheet.range('A2:' + tools.numberToLetters(num_columns) + str(num_lines + 1))
+            # modifying the values in the range
+
+            for cell in cell_list:
+                val = df.iloc[cell.row - 2, cell.col - 1]
+                # if type(val) is str:
+                #     val = val.decode('utf-8')
+                # if isinstance(val, (int, float, complex)):
+                #     # note that we round all numbers
+                #     val = int(round(val))
+                cell.value = val
+            # update in batch
+            worksheet.update_cells(cell_list)
+
         # except AttributeError:
         #     print('Results set empty. Are you using the \"all_playlists\" method?')
 

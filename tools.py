@@ -16,8 +16,8 @@ def get_config():
             except:
                 print("exception on %s!" % option)
                 config_dict[option] = None
-        print(config_dict)
-        return config_dict
+        # print(config_dict)
+    return config_dict
 
 
 class DefaultList(list):
@@ -35,3 +35,13 @@ def chunks(l, n):
     for i in range(0, len(l), n):
         # Create an index range for l of n items:
         yield l[i:i+n]
+
+
+def numberToLetters(q):
+    q = q - 1
+    result = ''
+    while q >= 0:
+        remain = q % 26
+        result = chr(remain+65) + result;
+        q = q//26 - 1
+    return result

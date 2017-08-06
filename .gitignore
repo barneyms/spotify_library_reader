@@ -5,3 +5,8 @@ __pycache__/tools.cpython-36.pyc
 .cache-*
 tests/*
 deprecated/
+google_api.py
+client_secret.json
+.DS_Store
+tests/
+creds.json

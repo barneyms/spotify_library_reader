@@ -22,11 +22,17 @@ then hit save. Populate config.ini.
 Run `main.py` from command line with the following arguments:
  * username: your spotify username (credentials will be required)
  * request_type: one of "playlist", "playlists", or "all_playlists" (see reference)
- * playlist: name of target playlist. Only needed if using "playlist" request
+ * playlist: name of target playlist. Only needed if using "playlist" request *** As of 04/08/2017 it's still
+  necessary to run the code. That will change! ***
 
 
  On first run, follow the instructions in terminal for authorisation. You will need to grant permissions
  and copy your full redirect URL into the terminal to continue.
+
+ e.g.
+
+ `main.py "Jane Doe" "playlists" "Doesnt matter"` : this will return Jane Doe's playlists
+ `main.py "Jane Doe" "playlist" "My First Playlist"` : this will return metadata for "My First Playlist"
 
  ### Reference
 
